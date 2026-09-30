@@ -8,4 +8,3 @@ Le sezioni principali includono:
 
 - Informatica.
 - TPSI.
-- Sistemi e Reti.
