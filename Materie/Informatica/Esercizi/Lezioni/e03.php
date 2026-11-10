@@ -12,8 +12,8 @@
             if(isset($_GET['scelta'])){
                 switch($_GET['scelta']){
                     case "calcola":{
-                        $a = $_GET['inputA'];
-                        $b = $_GET['inputB'];
+                        $a = $_GET['InputA'];
+                        $b = $_GET['InputB'];
 
                         $c = $a + $b;
                         echo('La somma '.$a.'+'.$b.'= '.$c.'<br />');
@@ -27,12 +27,12 @@
                     <h1>Form Inserimento Dati</h1>
                     <form action="e03.php" method="get">
                         <div class="mb-3">
-                            <label for="inputA" class="form-label">Inserisci valore A:</label>
-                            <input class="form-control form-control-lg" type="text" name="inputA" id="inputA" placeholder="Valore di A" aria-label="default input example">
+                            <label for="InputA" class="form-label">Inserisci valore A:</label>
+                            <input class="form-control form-control-lg" type="text" name="InputA" id="InputA" placeholder="Valore di A" aria-label="default input example">
                         </div>
                         <div class="mb-3">
-                            <label for="inputB" class="form-label">Inserisci valore B:</label>
-                            <input class="form-control form-control-lg" type="text" name="inputB" id="inputB" placeholder="valore di B" aria-label="default input example">
+                            <label for="InputB" class="form-label">Inserisci valore B:</label>
+                            <input class="form-control form-control-lg" type="text" name="InputB" id="InputB" placeholder="valore di B" aria-label="default input example">
                         </div>
                         <input type="hidden" name="scelta" id="scelta" value="calcola">
                         <button class="btn btn-success" type="submit">Inoltra il Form</button>

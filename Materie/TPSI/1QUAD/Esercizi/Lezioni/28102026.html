@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+    <!-- 
+    Esercitazione proposta
+    Crea un file di archivio JSON per catalogare ipotetiche auto usate di un losco rivenditore. Ogni autovettura è archiviata secondo le seguenti chiavi:
+    - Marca
+    - Modello
+    - Anno Immatricolazione
+    - Provincia
+    - Uniproprietario
+    - km
+
+    Una volta creato un archivio con una decina di autovetture, con dati diversi ed inventati, procedere alla creazione di una pagina HTML che grazie a funzioni Javascript permetta le seguenti operazioni:
+    - Visualizzazione intero archivio.
+    - Visualizzazione autovetture uniproprietario.
+    - Ricerca e visualizzazione autovetture secondo la Provincia.
+    - Ricerca e visualizzazione autovetture di una determinata marca.
+    - Ricerca e visualizzazione di autovetture con immatricolazione compresa tra anno_x e anno_y.
+
+    Predisporre un'interfaccia grafica con bottoni e caselle di testo, indicando quali valori richiedono/a cosa servono.
+    Applicare il framework Bootstrap dall'inizio o, eventualmente, sviluppare una versione funzionante base e applicarlo in un secondo momento su una copia/duplicato della versione di base.
+    -->
+    <html>
+    <head>
+        <title>AUTO USATE</title>
+        <meta charset="utf-8">
+        <!-- parte richiesta dal framework Bootstrap -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    </head>
+    <body>
+        <button id="btnCaricaJSON">Carica l'intero archivio</button>
+        <button id="btnCaricaUniproprietario">Carica autovetture con uniproprietario</button>
+        <button id="btnCaricaprovincia">Carica autovetture tramite provincia</button>
+        <br/><br/>
+        <div id="viewBox">Seleziona una opzione</div>
+        <script>
+            async function leggiarchivio(){
+                const promise = await fetch("28102026.json");
+                const vettarchivio = await promise.json();
+                let vb = document.querySelector("#viewBox");
+
+                vb.innerHTML = "Numero di JSON ricevuti: " + vettarchivio.length + "<br /><br />";
+
+                for(let i=0; i < vettarchivio.length; i++){
+                    vb.innerHTML += vettarchivio[i].marca + " " + vettarchivio[i].modello + " " + vettarchivio[i].anno + " " + vettarchivio[i].provincia + " " + vettarchivio[i].km + "<br />";
+                }
+            }
+
+            async function uniproprietario(){
+                const promise = await fetch("28102026.json");
+                const vettuniproprietario = await promise.json();
+                let vb = document.querySelector("#viewBox");
+
+                vb.innerHTML = "Numero autovetture con uniproprietario: " + vettuniproprietario.length + "<br /><br />";
+                for(let i=0; i < vettuniproprietario.length; i++){
+                    if(vettuniproprietario[i].uniproprietario == 1){
+                        vb.innerHTML += vettuniproprietario[i].marca + " " + vettuniproprietario[i].modello + " " + vettuniproprietario[i].anno + " " + vettuniproprietario[i].provincia + " " + vettuniproprietario[i].km + "<br />";
+                    }
+                }
+            }
+            async function provincia(){
+                const promise = await fetch("28102026.json");
+                const vettuniprovincia = await promise.json();
+                let vb = document.querySelector("#viewBox");
+
+                vb.innerHTML = "Numero autovetture nella provincia: " + vettuniproprietario.length + "<br/><br/>";
+                for(let i=0; i < vettuniprovincia.length; i++){
+                    if(vettuniproprietario[i].uniproprietario == 1){
+                        vb.innerHTML += vettuniprovincia[i].marca + " " + vettuniprovincia[i].modello + " " + vettuniprovincia[i].anno + " " + vettuniprovincia[i].provincia + " " + vettuniprovincia[i].km + "<br />";
+                    }
+                }
+            }
+            let btnCaricaTutto = document.querySelector("#btnCaricaJSON");
+            btnCaricaTutto.addEventListener('click', leggiarchivio);
+            let btnCaricaProprietario = document.querySelector("#btnCaricaUniproprietario");
+            btnCaricaProprietario.addEventListener('click', caricauniproprietario);
+            let btnCaricaProvincia = document.querySelector("#btnCaricaprovincia");
+            btnCaricaprovincia.addEventListener('click', provincia);
+        </script>
+    </body>
+</html>

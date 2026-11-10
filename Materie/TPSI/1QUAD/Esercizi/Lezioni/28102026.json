@@ -1,0 +1,74 @@
+[
+    {
+        "marca": "Chevrolet",
+        "modello": "Camaro",
+        "anno": 2007,
+        "provincia": "Roma",
+        "uniproprietario": false,
+        "km": 140000
+    },
+    {
+        "marca": "Tesla",
+        "modello": "Cybertruck",
+        "anno": 2023,
+        "provincia": "Milano",
+        "uniproprietario": true,
+        "km": 80001
+    },
+    {
+        "marca": "Lamborghini",
+        "modello": "Aventador",
+        "anno": 2019,
+        "provincia": "Verona",
+        "uniproprietario": true,
+        "km": 110000
+    },
+    {
+        "marca": "Seat",
+        "modello": "Ibiza",
+        "anno": 2010,
+        "provincia": "Mantova",
+        "uniproprietario": false,
+        "km": 209000
+    },
+    {
+        "marca": "Fiat",
+        "modello": "Panda",
+        "anno": 1989,
+        "provincia": "Ravenna",
+        "uniproprietario": false,
+        "km": 671000
+    },
+    {
+        "marca": "BMW",
+        "modello": "E39",
+        "anno": 1996,
+        "provincia": "Brescia",
+        "uniproprietario": false,
+        "km": 328000
+    },
+    {
+        "marca": "Tesla",
+        "modello": "Cab",
+        "anno": 2026,
+        "provincia": "Ferrara",
+        "uniproprietario": true,
+        "km": 2000
+    },
+    {
+        "marca": "Opel",
+        "modello": "Adam",
+        "anno": 2016,
+        "provincia": "Mantova",
+        "uniproprietario": true,
+        "km": 192000
+    },
+    {
+        "marca": "Opel",
+        "modello": "Astra",
+        "anno": 2016,
+        "provincia": "Mantova",
+        "uniproprietario": true,
+        "km": 179000
+    }
+]

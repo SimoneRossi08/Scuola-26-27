@@ -44,7 +44,6 @@
             }
 
             async function caricaListaMaschi(){
-                alert("toc toc");
                 const promise = await fetch("rubrica.json");
                 const vettMaschi = await promise.json();
                 let vb = document.querySelector("#viewBox");
@@ -62,6 +61,18 @@
                 let anni = document.querySelector("#anniRichiesti").value -> avete accesso alla stringa presente nel campo di testo
                 parseInt(anni) -> restituisci il valore intero della stringa presente nel campo di testo.
             */
+           async function anniRichiesti(){
+                const promise = await fetch("rubrica.json");
+                const vettMaschi = await promise.json();
+                let vb = document.querySelector("#viewBox");
+                let anni = document.querySelector("#anniRichiesti").value=parseInt(anni);
+
+                for(let i=0; i < vettMaschi.length; i++){
+                    if(vettMaschi[i].anno == anni){
+                        vb.innerHTML += vettMaschi[i].nome + " " + vettMaschi[i].cognome + " " + vettMaschi[i].sesso + " " + vettMaschi[i].anni + " " + vettMaschi[i].paese + "<br />";
+                    }
+                }
+           }
 
             /*  ad ogni caricamento della pagina viene eseguita la funzione leggiRubrica. */
             // leggiRubrica();
