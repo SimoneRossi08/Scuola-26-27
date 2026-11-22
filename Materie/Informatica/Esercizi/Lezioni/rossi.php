@@ -7,7 +7,6 @@
         <?php
             //phpinfo();
 
-            $var; // variabile
             $var=19;
 
             echo($var.'<br/>'); //stampa
