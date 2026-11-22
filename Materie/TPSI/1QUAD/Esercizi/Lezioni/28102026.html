@@ -7,7 +7,7 @@
     - Anno Immatricolazione
     - Provincia
     - Uniproprietario
-    - Kilometraggio
+    - km
 
     Una volta creato un archivio con una decina di autovetture, con dati diversi ed inventati, procedere alla creazione di una pagina HTML che grazie a funzioni Javascript permetta le seguenti operazioni:
     - Visualizzazione intero archivio.
@@ -19,63 +19,103 @@
     Predisporre un'interfaccia grafica con bottoni e caselle di testo, indicando quali valori richiedono/a cosa servono.
     Applicare il framework Bootstrap dall'inizio o, eventualmente, sviluppare una versione funzionante base e applicarlo in un secondo momento su una copia/duplicato della versione di base.
     -->
-    <html>
+<html>
     <head>
         <title>AUTO USATE</title>
         <meta charset="utf-8">
-        <!-- parte richiesta dal framework Bootstrap -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     </head>
     <body>
-        <button id="btnCaricaJSON">Carica l'intero archivio</button>
-        <button id="btnCaricaUniproprietario">Carica autovetture con uniproprietario</button>
-        <button id="btnCaricaprovincia">Carica autovetture tramite provincia</button>
+        <br/>
+        &nbsp;&nbsp;
+        <button id="btnCaricaJSON" class="btn btn-primary">Carica l'intero archivio</button>&nbsp;
+        <button id="btnCaricaUniproprietario" class="btn btn-primary">Carica autovetture con uniproprietario</button>&nbsp;
+        Provincia: <input type="text" id="Provincia" class="form-control d-inline-block" placeholder="Es. Padova" style="width: 10%;">&nbsp;<button id="btnCaricaprovincia" class="btn btn-primary">Carica autovetture tramite provincia</button>
+        Da Anno: <input type="text" id="AnnoX" class="form-control d-inline-block" placeholder="Es. 2010" style="width: 10%;">&nbsp;A Anno: <input type="text" id="AnnoY" class="form-control d-inline-block" placeholder="Es. 2020" style="width: 10%;">&nbsp;<button id="btnCaricaAnno" class="btn btn-primary">Carica autovetture tramite anno</button>
         <br/><br/>
-        <div id="viewBox">Seleziona una opzione</div>
+        <div id="viewBox" style="margin: 10px;"></div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
         <script>
             async function leggiarchivio(){
-                const promise = await fetch("28102026.json");
-                const vettarchivio = await promise.json();
-                let vb = document.querySelector("#viewBox");
+                const promise=await fetch("28102026.json");
+                const vettarchivio=await promise.json();
+                let vb=document.querySelector("#viewBox");
 
-                vb.innerHTML = "Numero di JSON ricevuti: " + vettarchivio.length + "<br /><br />";
+                vb.innerHTML="Numero di JSON ricevuti: " + vettarchivio.length + "<br /><br />";
 
-                for(let i=0; i < vettarchivio.length; i++){
-                    vb.innerHTML += vettarchivio[i].marca + " " + vettarchivio[i].modello + " " + vettarchivio[i].anno + " " + vettarchivio[i].provincia + " " + vettarchivio[i].km + "<br />";
+                for(let i=0; i<vettarchivio.length; i++){
+                    vb.innerHTML += vettarchivio[i].marca + " " + vettarchivio[i].modello + " " + vettarchivio[i].anno + " " + vettarchivio[i].provincia + " " + vettarchivio[i].km + " km <br />";
                 }
             }
-
             async function uniproprietario(){
-                const promise = await fetch("28102026.json");
-                const vettuniproprietario = await promise.json();
-                let vb = document.querySelector("#viewBox");
+                const promise=await fetch("28102026.json");
+                const vettuniproprietario=await promise.json();
+                let vb=document.querySelector("#viewBox");
 
-                vb.innerHTML = "Numero autovetture con uniproprietario: " + vettuniproprietario.length + "<br /><br />";
-                for(let i=0; i < vettuniproprietario.length; i++){
-                    if(vettuniproprietario[i].uniproprietario == 1){
+                let cnt=0;
+
+                for(let i=0; i<vettuniproprietario.length; i++){
+                    if(vettuniproprietario[i].uniproprietario==1){
+                        cnt++;
+                    }
+                }
+                vb.innerHTML="Numero autovetture con uniproprietario: " + cnt + "<br /><br />";
+                for(let i=0; i<vettuniproprietario.length; i++){
+                    if(vettuniproprietario[i].uniproprietario==1){
                         vb.innerHTML += vettuniproprietario[i].marca + " " + vettuniproprietario[i].modello + " " + vettuniproprietario[i].anno + " " + vettuniproprietario[i].provincia + " " + vettuniproprietario[i].km + "<br />";
                     }
                 }
             }
             async function provincia(){
-                const promise = await fetch("28102026.json");
-                const vettuniprovincia = await promise.json();
-                let vb = document.querySelector("#viewBox");
+                const promise=await fetch("28102026.json");
+                const vettprovincia=await promise.json();
+                let vb=document.querySelector("#viewBox");
+                let provincia=document.querySelector("#Provincia").value;
+                let cnt=0;
 
-                vb.innerHTML = "Numero autovetture nella provincia: " + vettuniproprietario.length + "<br/><br/>";
-                for(let i=0; i < vettuniprovincia.length; i++){
-                    if(vettuniproprietario[i].uniproprietario == 1){
-                        vb.innerHTML += vettuniprovincia[i].marca + " " + vettuniprovincia[i].modello + " " + vettuniprovincia[i].anno + " " + vettuniprovincia[i].provincia + " " + vettuniprovincia[i].km + "<br />";
+                for(let i=0; i<vettprovincia.length; i++){
+                    if(vettprovincia[i].provincia==provincia){
+                        cnt++;
+                    }
+                }
+                
+                vb.innerHTML="Numero autovetture nella provincia: " + cnt + "<br/><br/>";
+                for(let i=0; i<vettprovincia.length; i++){
+                    if(vettprovincia[i].provincia==provincia){
+                        vb.innerHTML += vettprovincia[i].marca + " " + vettprovincia[i].modello + " " + vettprovincia[i].anno + " " + vettprovincia[i].provincia + " " + vettprovincia[i].km + "<br />";
                     }
                 }
             }
-            let btnCaricaTutto = document.querySelector("#btnCaricaJSON");
+            async function anno(){
+                const promise=await fetch("28102026.json");
+                const vettanni=await promise.json();
+                let vb=document.querySelector("#viewBox");
+                let anno_x=parseInt(document.querySelector("#AnnoX").value);
+                let anno_y=parseInt(document.querySelector("#AnnoY").value);
+                let cnt=0;
+
+                vb.innerHTML += anno_x + " " + anno_y + "<br/>";
+                for(let i=0; i<vettanni.length; i++){
+                    if(vettanni[i].anno>=anno_x && vettanni[i].anno<=anno_y){
+                        cnt++;
+                    }
+                }
+                vb.innerHTML="Autovetture da anno a anno: " + cnt + "<br/><br/>";
+                for(let i=0; i<vettanni.length; i++){
+                    if(vettanni[i].anno>=anno_x && vettanni[i].anno<=anno_y){
+                        vb.innerHTML += vettanni[i].marca + " " + vettanni[i].modello + " " + vettanni[i].anno + " " + vettanni[i].provincia + " " + vettanni[i].km + "<br />";
+                    }
+                }
+            }
+            let btnCaricaTutto=document.querySelector("#btnCaricaJSON");
             btnCaricaTutto.addEventListener('click', leggiarchivio);
-            let btnCaricaProprietario = document.querySelector("#btnCaricaUniproprietario");
-            btnCaricaProprietario.addEventListener('click', caricauniproprietario);
-            let btnCaricaProvincia = document.querySelector("#btnCaricaprovincia");
-            btnCaricaprovincia.addEventListener('click', provincia);
+            let btnCaricaProprietario=document.querySelector("#btnCaricaUniproprietario");
+            btnCaricaProprietario.addEventListener('click', uniproprietario);
+            let btnCaricaProvincia=document.querySelector("#btnCaricaprovincia");
+            btnCaricaProvincia.addEventListener('click', provincia);
+            let btnCaricaAnno=document.querySelector("#btnCaricaAnno");
+            btnCaricaAnno.addEventListener('click', anno);
         </script>
     </body>
 </html>

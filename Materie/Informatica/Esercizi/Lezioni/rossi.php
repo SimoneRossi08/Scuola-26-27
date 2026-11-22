@@ -1,4 +1,4 @@
-<!DOCTYPE hmtl>
+<!DOCTYPE html>
 <html>
     <head>
         <title>Pagina PHP di Prova</title>
