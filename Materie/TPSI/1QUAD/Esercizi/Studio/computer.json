@@ -1,0 +1,102 @@
+[
+    {
+        "marca": "NAPOLI",
+        "modello": "Asse Napuli",
+        "processore": "Maradona",
+        "ram": 16,
+        "memoria": 256,
+        "anno": 2022,
+        "prezzo": 1200,
+        "disponibile": true
+    },
+    {
+        "marca": "Tre Biscotti",
+        "modello": "Suca Mode",
+        "processore": "Incel",
+        "ram": 32,
+        "memoria": 1024,
+        "anno": 2018,
+        "prezzo": 1600,
+        "disponibile": false
+    },
+    {
+        "marca": "Corsaro",
+        "modello": "Nautilo",
+        "processore": "MD",
+        "ram": 16,
+        "memoria": 1024,
+        "anno": 2026,
+        "prezzo": 1700,
+        "disponibile": true
+    },
+    {
+        "marca": "Corsaro",
+        "modello": "Epic Ultra Mega Pro Gaming 2000",
+        "processore": "MD",
+        "ram": 64,
+        "memoria": 512,
+        "anno": 2024,
+        "prezzo": 4100,
+        "disponibile": true
+    },
+    {
+        "marca": "NAPOLI",
+        "modello": "Vesuvio",
+        "processore": "Maradona",
+        "ram": 8,
+        "memoria": 128,
+        "anno": 2016,
+        "prezzo": 800,
+        "disponibile": false
+    },
+    {
+        "marca": "Tre Biscotti",
+        "modello": "Mai Ice",
+        "processore": "Incel",
+        "ram": 16,
+        "memoria": 512,
+        "anno": 2023,
+        "prezzo": 1500,
+        "disponibile": true
+    },
+    {
+        "marca": "NAPOLI",
+        "modello": "Scampia",
+        "processore": "Maradona",
+        "ram": 16,
+        "memoria": 512,
+        "anno": 2024,
+        "prezzo": 1340,
+        "disponibile": true
+    },
+    {
+        "marca": "1HP",
+        "modello": "Oman",
+        "processore": "Incel",
+        "ram": 16,
+        "memoria": 512,
+        "anno": 2021,
+        "prezzo": 1800,
+        "disponibile": false
+    },
+    {
+        "marca": "Tre Biscotti",
+        "modello": "GTA 6",
+        "processore": "MD",
+        "ram": 32,
+        "memoria": 1024,
+        "anno": 2026,
+        "prezzo": 1900,
+        "disponibile": true
+    },
+    {
+        "marca": "1HP",
+        "modello": "Oman Eco",
+        "processore": "Incel",
+        "ram": 4,
+        "memoria": 64,
+        "anno": 2022,
+        "prezzo": 510,
+        "disponibile": true
+    }
+]
