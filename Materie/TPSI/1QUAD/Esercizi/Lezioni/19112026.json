@@ -1,0 +1,30 @@
+[
+    {
+        "titolo": "My Name is Mayo",
+        "piattaforma": "PS4",
+        "anno": 2016,
+        "peso": 0.1,
+        "estensione": "PKG"
+    },
+    {
+        "titolo": "Yo-Kai Watch",
+        "piattaforma": "Nintendo 3DS",
+        "anno": 2013,
+        "peso": 1,
+        "estensione": "3DS"
+    },
+    {
+        "titolo": "Call Of Duty MW4",
+        "piattaforma": "Multi",
+        "anno": 2026,
+        "peso": 115,
+        "estensione": "R4V3N"
+    },
+    {
+        "titolo": "Pokémon Leggende Arceus",
+        "piattaforma": "Nintendo Switch",
+        "anno": 2020,
+        "peso": 10,
+        "estensione": "NSP"
+    }
+]
