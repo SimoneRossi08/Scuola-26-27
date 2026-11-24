@@ -1,0 +1,122 @@
+[
+    {
+        "tipologia": "Appartamento",
+        "indirizzo": "Via Ponga 4",
+        "città": "Cavriana",
+        "provincia": "MN",
+        "superficie": 50,
+        "n_locali": 2,
+        "prezzo": 900,
+        "disponibile": true
+    },
+    {
+        "tipologia": "Villa",
+        "indirizzo": "Via Vittorio Veneto 51",
+        "città": "Genova",
+        "provincia": "GE",
+        "superficie": 5000,
+        "n_locali": 3,
+        "prezzo": 940000,
+        "disponibile": false
+    },
+    {
+        "tipologia": "Monolocale",
+        "indirizzo": "Via Ponga 4",
+        "città": "Cavriana",
+        "provincia": "MN",
+        "superficie": 50,
+        "n_locali": 1,
+        "prezzo": 900,
+        "disponibile": true
+    },
+    {
+        "tipologia": "Appartamento",
+        "indirizzo": "Via Ponga 4",
+        "città": "Cavriana",
+        "provincia": "MN",
+        "superficie": 50,
+        "n_locali": 12,
+        "prezzo": 900,
+        "disponibile": true
+    },
+    {
+        "tipologia": "Attico",
+        "indirizzo": "Via Roma 125",
+        "città": "Milano",
+        "provincia": "MI",
+        "superficie": 180,
+        "n_locali": 5,
+        "prezzo": 750000,
+        "disponibile": true
+    },
+    {
+        "tipologia": "Villa",
+        "indirizzo": "Via delle Rose 18",
+        "città": "Mantova",
+        "provincia": "MN",
+        "superficie": 320,
+        "n_locali": 8,
+        "prezzo": 485000,
+        "disponibile": false
+    },
+    {
+        "tipologia": "Bilocale",
+        "indirizzo": "Corso Italia 42",
+        "città": "Torino",
+        "provincia": "TO",
+        "superficie": 65,
+        "n_locali": 2,
+        "prezzo": 145000,
+        "disponibile": true
+    },
+    {
+        "tipologia": "Monolocale",
+        "indirizzo": "Via Garibaldi 9",
+        "città": "Bologna",
+        "provincia": "BO",
+        "superficie": 38,
+        "n_locali": 1,
+        "prezzo": 95000,
+        "disponibile": false
+    },
+    {
+        "tipologia": "Casa indipendente",
+        "indirizzo": "Via dei Pini 76",
+        "città": "Verona",
+        "provincia": "VR",
+        "superficie": 210,
+        "n_locali": 6,
+        "prezzo": 310000,
+        "disponibile": true
+    },
+    {
+        "tipologia": "Rustico",
+        "indirizzo": "Strada del Bosco 14",
+        "città": "Parma",
+        "provincia": "PR",
+        "superficie": 150,
+        "n_locali": 4,
+        "prezzo": 175000,
+        "disponibile": false
+    },
+    {
+        "tipologia": "Appartamento",
+        "indirizzo": "Via Napoli 33",
+        "città": "Firenze",
+        "provincia": "FI",
+        "superficie": 95,
+        "n_locali": 4,
+        "prezzo": 280000,
+        "disponibile": true
+    },
+    {
+        "tipologia": "Villa a schiera",
+        "indirizzo": "Via del Mare 21",
+        "città": "Rimini",
+        "provincia": "RN",
+        "superficie": 240,
+        "n_locali": 7,
+        "prezzo": 390000,
+        "disponibile": true
+    }
+]
