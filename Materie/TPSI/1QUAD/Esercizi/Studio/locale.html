@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<!--
+Esercitazione proposta
+
+Crea un file di archivio JSON per catalogare ipotetici immobili messi in vendita da un'agenzia immobiliare. Ogni immobile è archiviato secondo le seguenti chiavi:
+- Tipologia (Appartamento, Villa, Monolocale, ecc.)
+- Indirizzo
+- Città
+- Provincia
+- Superficie (m²)
+- Numero di Locali
+- Prezzo (€)
+- Disponibile (booleano)
+
+Una volta creato un archivio con una decina di immobili, con dati diversi ed inventati, procedere alla creazione di una pagina HTML che grazie a funzioni Javascript permetta le seguenti operazioni:
+- Visualizzazione dell'intero archivio.
+- Visualizzazione degli immobili attualmente disponibili.
+- Ricerca e visualizzazione degli immobili secondo la città.
+- Ricerca e visualizzazione degli immobili secondo la tipologia.
+- Ricerca e visualizzazione degli immobili con una superficie compresa tra superficie_min e superficie_max.
+- Ricerca e visualizzazione degli immobili con un prezzo inferiore o uguale a un valore massimo indicato.
+- Ricerca e visualizzazione degli immobili con un numero di locali specifico.
+
+Predisporre un'interfaccia grafica con bottoni e caselle di testo, indicando quali valori richiedono e a cosa servono.
+
+Applicare il framework Bootstrap dall'inizio o, eventualmente, sviluppare una versione funzionante base e applicarlo in un secondo momento su una copia/duplicato della versione di base.
+-->
+<html>
+    <head>
+        <title>IMMOBILI</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    </head>
+    <body style="background-color: black;">
+        <h1 class="text-center" style="color:white">IMMOBILI</h1>
+
+        <button id="CaricaLista" class="btn btn-success">Mostra Catalogo</button>&nbsp;
+
+        <button id="CaricaDisp" class="btn btn-success">Mostra Disponibili</button><br><br>
+
+        <div class="row">
+            <div class="col-4"><input id="Città" type="text" placeholder="Mantova, Milano..." class="form-control"></div>
+            <div class="col-4"><button id="CaricaCittà" class="btn btn-success">Mostra per Città</button></div>
+        </div><br>
+
+        <div class="row">
+            <div class="col-4"><input id="Tipologia" type="text" placeholder="Appartamento, Villa, Monolocale..." class="form-control"></div>
+            <div class="col-4"><button id="CaricaTipo" class="btn btn-success">Mostra per Tipologia</button></div>
+        </div><br>
+
+        <div class="row">
+            <div class="col-4"><input id="SupMin" type="text" placeholder="20..." class="form-control"></div>
+            <div class="col-4"><input id="SupMax" type="text" placeholder="300..." class="form-control"></div>
+            <div class="col-4"><button id="CaricaSuper" class="btn btn-success">Carica per Superficie</button></div>
+        </div><br>
+
+        <div class="row">
+            <div class="col-4"><input id="PrezzoMin" type="text" placeholder="50000..." class="form-control"></div>
+            <div class="col-4"><input id="PrezzoMax" type="text" placeholder="200000..." class="form-control"></div>
+            <div class="col-4"><button id="CaricaPrezzo" class="btn btn-success">Carica per Prezzo</button></div>
+        </div><br>
+
+        <div class="row">
+            <div class="col-4"><input id="Locali" type="text" placeholder="3..." class="form-control"></div>
+            <div class="col-4"><button id="CaricaLocali" class="btn btn-success">Carica per Locali</button></div>
+        </div><br>
+
+        <div id="Catalogo"></div>
+    
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+        <script>
+            async function CaricaLista(){
+                const risposta=await fetch("locale.json");
+                const vett=await risposta.json();
+                let ctlg=document.querySelector("#Catalogo");
+                let table=`<table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Tipologia</th>
+                                    <th scope="col">Indirizzo</th>
+                                    <th scope="col">Città</th>
+                                    <th scope="col">Provincia</th>
+                                    <th scope="col">Superficie (m²)</th>
+                                    <th scope="col">Numero di locali</th>
+                                    <th scope="col">Prezzo (€)</th>
+                                    <th scope="col">Disponibile</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+
+                for(let i=0; i<vett.length; i++){
+                    table+="<tr>";
+                    table+='<th scope="row">'+ (i+1) +'</th>';
+                    table+="<td>"+vett[i].tipologia+"</td>";
+                    table+="<td>"+vett[i].indirizzo+"</td>";
+                    table+="<td>"+vett[i].città+"</td>";
+                    table+="<td>"+vett[i].provincia+"</td>";
+                    table+="<td>"+vett[i].superficie+"m²</td>";
+                    table+="<td>"+vett[i].n_locali+"</td>";
+                    table+="<td>"+vett[i].prezzo+"€</td>";
+                    table+="<td>"+vett[i].disponibile+"</td>";
+                    table+="</tr>";
+                }                
+                table+="</tbody></table>";
+                ctlg.innerHTML=table;
+            }
+
+            async function CaricaDisp(){
+                const risposta=await fetch("locale.json");
+                const vett=await risposta.json();
+                let ctlg=document.querySelector("#Catalogo");
+                let table=`<table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Tipologia</th>
+                                    <th scope="col">Indirizzo</th>
+                                    <th scope="col">Città</th>
+                                    <th scope="col">Provincia</th>
+                                    <th scope="col">Superficie (m²)</th>
+                                    <th scope="col">Numero di locali</th>
+                                    <th scope="col">Prezzo (€)</th>
+                                    <th scope="col">Disponibile</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+
+                for(let i=0; i<vett.length; i++){
+                    if(vett[i].disponibile==true){
+                        table+="<tr>";
+                        table+='<th scope="row">'+ (i+1) +'</th>';
+                        table+="<td>"+vett[i].tipologia+"</td>";
+                        table+="<td>"+vett[i].indirizzo+"</td>";
+                        table+="<td>"+vett[i].città+"</td>";
+                        table+="<td>"+vett[i].provincia+"</td>";
+                        table+="<td>"+vett[i].superficie+"m²</td>";
+                        table+="<td>"+vett[i].n_locali+"</td>";
+                        table+="<td>"+vett[i].prezzo+"€</td>";
+                        table+="<td>"+vett[i].disponibile+"</td>";
+                        table+="</tr>";
+                    }
+                }                
+                table+="</tbody></table>";
+                ctlg.innerHTML=table;
+            }
+
+            async function CaricaCittà(){
+                const risposta=await fetch("locale.json");
+                const vett=await risposta.json();
+                let ctlg=document.querySelector("#Catalogo");
+                let città=document.querySelector("#Città").value;
+                let table=`<table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Tipologia</th>
+                                    <th scope="col">Indirizzo</th>
+                                    <th scope="col">Città</th>
+                                    <th scope="col">Provincia</th>
+                                    <th scope="col">Superficie (m²)</th>
+                                    <th scope="col">Numero di locali</th>
+                                    <th scope="col">Prezzo (€)</th>
+                                    <th scope="col">Disponibile</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+
+                for(let i=0; i<vett.length; i++){
+                    if(vett[i].città==città){
+                        table+="<tr>";
+                        table+='<th scope="row">'+ (i+1) +'</th>';
+                        table+="<td>"+vett[i].tipologia+"</td>";
+                        table+="<td>"+vett[i].indirizzo+"</td>";
+                        table+="<td>"+vett[i].città+"</td>";
+                        table+="<td>"+vett[i].provincia+"</td>";
+                        table+="<td>"+vett[i].superficie+"m²</td>";
+                        table+="<td>"+vett[i].n_locali+"</td>";
+                        table+="<td>"+vett[i].prezzo+"€</td>";
+                        table+="<td>"+vett[i].disponibile+"</td>";
+                        table+="</tr>";
+                    }
+                }                
+                table+="</tbody></table>";
+                ctlg.innerHTML=table;
+            }
+
+            async function CaricaTipologia(){
+                const risposta=await fetch("locale.json");
+                const vett=await risposta.json();
+                let ctlg=document.querySelector("#Catalogo");
+                let tipo=document.querySelector("#Tipologia").value;
+                let table=`<table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Tipologia</th>
+                                    <th scope="col">Indirizzo</th>
+                                    <th scope="col">Città</th>
+                                    <th scope="col">Provincia</th>
+                                    <th scope="col">Superficie (m²)</th>
+                                    <th scope="col">Numero di locali</th>
+                                    <th scope="col">Prezzo (€)</th>
+                                    <th scope="col">Disponibile</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+
+                for(let i=0; i<vett.length; i++){
+                    if(vett[i].tipologia==tipo){
+                        table+="<tr>";
+                        table+='<th scope="row">'+ (i+1) +'</th>';
+                        table+="<td>"+vett[i].tipologia+"</td>";
+                        table+="<td>"+vett[i].indirizzo+"</td>";
+                        table+="<td>"+vett[i].città+"</td>";
+                        table+="<td>"+vett[i].provincia+"</td>";
+                        table+="<td>"+vett[i].superficie+"m²</td>";
+                        table+="<td>"+vett[i].n_locali+"</td>";
+                        table+="<td>"+vett[i].prezzo+"€</td>";
+                        table+="<td>"+vett[i].disponibile+"</td>";
+                        table+="</tr>";
+                    }
+                }                
+                table+="</tbody></table>";
+                ctlg.innerHTML=table;
+            }
+
+            async function CaricaSuper(){
+                const risposta=await fetch("locale.json");
+                const vett=await risposta.json();
+                let ctlg=document.querySelector("#Catalogo");
+                let superficie_min=document.querySelector("#SupMin").value;
+                let superficie_max=document.querySelector("#SupMax").value;
+                let table=`<table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Tipologia</th>
+                                    <th scope="col">Indirizzo</th>
+                                    <th scope="col">Città</th>
+                                    <th scope="col">Provincia</th>
+                                    <th scope="col">Superficie (m²)</th>
+                                    <th scope="col">Numero di locali</th>
+                                    <th scope="col">Prezzo (€)</th>
+                                    <th scope="col">Disponibile</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+
+                for(let i=0; i<vett.length; i++){
+                    if(vett[i].superficie<=superficie_max && vett[i].superficie>=superficie_min){
+                        table+="<tr>";
+                        table+='<th scope="row">'+ (i+1) +'</th>';
+                        table+="<td>"+vett[i].tipologia+"</td>";
+                        table+="<td>"+vett[i].indirizzo+"</td>";
+                        table+="<td>"+vett[i].città+"</td>";
+                        table+="<td>"+vett[i].provincia+"</td>";
+                        table+="<td>"+vett[i].superficie+"m²</td>";
+                        table+="<td>"+vett[i].n_locali+"</td>";
+                        table+="<td>"+vett[i].prezzo+"€</td>";
+                        table+="<td>"+vett[i].disponibile+"</td>";
+                        table+="</tr>";
+                    }
+                }                
+                table+="</tbody></table>";
+                ctlg.innerHTML=table;
+            }
+
+            async function CaricaSuper(){
+                const risposta=await fetch("locale.json");
+                const vett=await risposta.json();
+                let ctlg=document.querySelector("#Catalogo");
+                let superficie_min=document.querySelector("#SupMin").value;
+                let superficie_max=document.querySelector("#SupMax").value;
+                let table=`<table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Tipologia</th>
+                                    <th scope="col">Indirizzo</th>
+                                    <th scope="col">Città</th>
+                                    <th scope="col">Provincia</th>
+                                    <th scope="col">Superficie (m²)</th>
+                                    <th scope="col">Numero di locali</th>
+                                    <th scope="col">Prezzo (€)</th>
+                                    <th scope="col">Disponibile</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+
+                for(let i=0; i<vett.length; i++){
+                    if(vett[i].superficie<=superficie_max && vett[i].superficie>=superficie_min){
+                        table+="<tr>";
+                        table+='<th scope="row">'+ (i+1) +'</th>';
+                        table+="<td>"+vett[i].tipologia+"</td>";
+                        table+="<td>"+vett[i].indirizzo+"</td>";
+                        table+="<td>"+vett[i].città+"</td>";
+                        table+="<td>"+vett[i].provincia+"</td>";
+                        table+="<td>"+vett[i].superficie+"m²</td>";
+                        table+="<td>"+vett[i].n_locali+"</td>";
+                        table+="<td>"+vett[i].prezzo+"€</td>";
+                        table+="<td>"+vett[i].disponibile+"</td>";
+                        table+="</tr>";
+                    }
+                }                
+                table+="</tbody></table>";
+                ctlg.innerHTML=table;
+            }
+
+            async function CaricaPrezzo(){
+                const risposta=await fetch("locale.json");
+                const vett=await risposta.json();
+                let ctlg=document.querySelector("#Catalogo");
+                let prezzo_min=document.querySelector("#PrezzoMin").value;
+                let prezzo_max=document.querySelector("#PrezzoMax").value;
+                let table=`<table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Tipologia</th>
+                                    <th scope="col">Indirizzo</th>
+                                    <th scope="col">Città</th>
+                                    <th scope="col">Provincia</th>
+                                    <th scope="col">Superficie (m²)</th>
+                                    <th scope="col">Numero di locali</th>
+                                    <th scope="col">Prezzo (€)</th>
+                                    <th scope="col">Disponibile</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+
+                for(let i=0; i<vett.length; i++){
+                    if(vett[i].prezzo<=prezzo_max && vett[i].prezzo>=prezzo_min){
+                        table+="<tr>";
+                        table+='<th scope="row">'+ (i+1) +'</th>';
+                        table+="<td>"+vett[i].tipologia+"</td>";
+                        table+="<td>"+vett[i].indirizzo+"</td>";
+                        table+="<td>"+vett[i].città+"</td>";
+                        table+="<td>"+vett[i].provincia+"</td>";
+                        table+="<td>"+vett[i].superficie+"m²</td>";
+                        table+="<td>"+vett[i].n_locali+"</td>";
+                        table+="<td>"+vett[i].prezzo+"€</td>";
+                        table+="<td>"+vett[i].disponibile+"</td>";
+                        table+="</tr>";
+                    }
+                }                
+                table+="</tbody></table>";
+                ctlg.innerHTML=table;
+            }
+
+            async function CaricaLocali(){
+                const risposta=await fetch("locale.json");
+                const vett=await risposta.json();
+                let ctlg=document.querySelector("#Catalogo");
+                let n_locali=document.querySelector("#Locali").value;
+                let table=`<table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Tipologia</th>
+                                    <th scope="col">Indirizzo</th>
+                                    <th scope="col">Città</th>
+                                    <th scope="col">Provincia</th>
+                                    <th scope="col">Superficie (m²)</th>
+                                    <th scope="col">Numero di locali</th>
+                                    <th scope="col">Prezzo (€)</th>
+                                    <th scope="col">Disponibile</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+
+                for(let i=0; i<vett.length; i++){
+                    if(vett[i].n_locali==n_locali){
+                        table+="<tr>";
+                        table+='<th scope="row">'+ (i+1) +'</th>';
+                        table+="<td>"+vett[i].tipologia+"</td>";
+                        table+="<td>"+vett[i].indirizzo+"</td>";
+                        table+="<td>"+vett[i].città+"</td>";
+                        table+="<td>"+vett[i].provincia+"</td>";
+                        table+="<td>"+vett[i].superficie+"m²</td>";
+                        table+="<td>"+vett[i].n_locali+"</td>";
+                        table+="<td>"+vett[i].prezzo+"€</td>";
+                        table+="<td>"+vett[i].disponibile+"</td>";
+                        table+="</tr>";
+                    }
+                }                
+                table+="</tbody></table>";
+                ctlg.innerHTML=table;
+            }
+
+            let btnCaricaLista=document.querySelector("#CaricaLista");
+            btnCaricaLista.addEventListener('click', CaricaLista);
+            let btnCaricaDisp=document.querySelector("#CaricaDisp");
+            btnCaricaDisp.addEventListener('click', CaricaDisp);
+            let btnCaricaCittà=document.querySelector("#CaricaCittà");
+            btnCaricaCittà.addEventListener('click', CaricaCittà);
+            let btnCaricaTipo=document.querySelector("#CaricaTipo");
+            btnCaricaTipo.addEventListener('click', CaricaTipologia);
+            let btnCaricaSup=document.querySelector("#CaricaSuper");
+            btnCaricaSup.addEventListener('click', CaricaSuper);
+            let btnCaricaPrez=document.querySelector("#CaricaPrezzo");
+            btnCaricaPrez.addEventListener('click', CaricaPrezzo);
+            let btnCaricaNL=document.querySelector("#CaricaLocali");
+            btnCaricaNL.addEventListener('click', CaricaLocali);
+        </script>
+    </body>
+</html>

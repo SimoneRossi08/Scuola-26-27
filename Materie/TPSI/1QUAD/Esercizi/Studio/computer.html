@@ -1,0 +1,237 @@
+<html>
+<!--
+Esercitazione proposta
+
+Crea un file di archivio JSON per catalogare ipotetici computer usati venduti da un negozio di informatica. Ogni computer è archiviato secondo le seguenti chiavi:
+- Marca
+- Modello
+- Processore
+- RAM (GB)
+- Memoria (GB)
+- Anno di Produzione
+- Prezzo (€)
+- Disponibile (booleano)
+
+Una volta creato un archivio con una decina di computer, con dati diversi ed inventati, procedere alla creazione di una pagina HTML che grazie a funzioni Javascript permetta le seguenti operazioni:
+- Visualizzazione dell'intero archivio.
+- Visualizzazione dei computer attualmente disponibili.
+- Ricerca e visualizzazione dei computer secondo la marca.
+- Ricerca e visualizzazione dei computer dotati di una determinata quantità di RAM.
+- Ricerca e visualizzazione dei computer con prezzo compreso tra prezzo_min e prezzo_max.
+- Ricerca e visualizzazione dei computer prodotti tra anno_x e anno_y.
+
+Predisporre un'interfaccia grafica con bottoni e caselle di testo, indicando quali valori richiedono e a cosa servono.
+
+Applicare il framework Bootstrap dall'inizio o, eventualmente, sviluppare una versione funzionante base e applicarlo in un secondo momento su una copia/duplicato della versione di base.
+-->
+    <head>
+        <title>Catalogo Computer</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    </head>
+    <body style="background-color: black; color: white">
+        <br><div><h1 class="text-center">Catalogo Computer</h1></div><br>
+        <div id="Pulsanti" style="padding: 15px;">
+            &nbsp;<div class="d-flex flex-nowrap overflow-auto"><button id="CaricaLista" class="btn btn-info text-nowrap">Visualizza Archivio</button></div><br>
+            <div class="d-flex" style="gap: 20px;">
+                <div style="width: 600px;">
+                    <div class="d-flex flex-nowrap overflow-auto"><button id="CaricaDisp" class="btn btn-info text-nowrap">Visualizza per Disponibiltà</button></div><br>
+
+                    &nbsp;<input id="Marca" type="text" placeholder="Corsaro, NAPOLI..." class="form-control mb-2">&nbsp;
+                    <div class="d-flex flex-nowrap overflow-auto"><button id="CaricaMarca" class="btn btn-info text-nowrap">Visualizza per Marca</button></div><br>
+                    
+                    &nbsp;<input id="RAM" type="text" placeholder="16, 8..." class="form-control mb-2">&nbsp;
+                    <div class="d-flex flex-nowrap overflow-auto"><button id="CaricaRAM" class="btn btn-info text-nowrap">Visualizza per RAM</button></div><br>
+                </div>
+
+                <div style="width: 600px;">
+                    &nbsp;<label>Prezzo Minimo</label><input id="PrezzoMin" type="text" placeholder="600..." class="form-control mb-2">
+                    &nbsp;<label>Prezzo Massimo</label><input id="PrezzoMax" type="text" placeholder="2100..." class="form-control mb-2">&nbsp;
+                    <div class="d-flex flex-nowrap overflow-auto"><button id="CaricaPrezzo" class="btn btn-info text-nowrap">Visualizza per Prezzo</button></div><br>
+
+                    &nbsp;<input id="AnnoX" type="text" placeholder="2000..." class="form-control mb-2"><br>
+                    <input id="AnnoY" type="text" placeholder="2026..." class="form-control mb-2">&nbsp;
+                    <div class="d-flex flex-nowrap overflow-auto"><button id="CaricaAnno" class="btn btn-info text-nowrap">Visualizza per Anno</button></div><br>
+                </div>
+            </div>
+        </div>
+        <div id="Lista"></div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+        <script>
+            async function CaricaLista(){
+                const promise=await fetch("computer.json");
+                const vett=await promise.json();
+                let ls=document.querySelector("#Lista");
+
+                let Tabella="<table class=\"table table-striped\">";
+                Tabella+="<tbody>";
+                for(let i=0; i<vett.length; i++){
+                    Tabella+="<tr>";
+                    Tabella+="<td>"+vett[i].marca+"</td>"
+                    Tabella+="<td>"+vett[i].modello+"</td>"
+                    Tabella+="<td>"+vett[i].processore+"</td>"
+                    Tabella+="<td>"+vett[i].ram+" GB</td>"
+                    Tabella+="<td>"+vett[i].memoria+" GB</td>"
+                    Tabella+="<td>"+vett[i].anno+"</td>"
+                    Tabella+="<td>"+vett[i].prezzo+" $</td>"
+                    Tabella+="<td>"+vett[i].disponibile+"</td>"
+                    Tabella+="</tr>";
+                }
+                Tabella+="</tbody>";
+                Tabella+="</table>";
+                ls.innerHTML=Tabella;
+            }
+
+            async function CaricaMarca(){
+                const promise=await fetch("computer.json");
+                const vett=await promise.json();
+                let ls=document.querySelector("#Lista");
+                let marca=document.querySelector("#Marca").value;
+
+                let Tabella="<table class=\"table table-striped\">";
+                Tabella+="<tbody>";
+                for(let i=0; i<vett.length; i++){
+                    if(vett[i].marca==marca){
+                        Tabella+="<tr>";
+                        Tabella+="<td>"+vett[i].marca+"</td>"
+                        Tabella+="<td>"+vett[i].modello+"</td>"
+                        Tabella+="<td>"+vett[i].processore+"</td>"
+                        Tabella+="<td>"+vett[i].ram+" GB</td>"
+                        Tabella+="<td>"+vett[i].memoria+" GB</td>"
+                        Tabella+="<td>"+vett[i].anno+"</td>"
+                        Tabella+="<td>"+vett[i].prezzo+" $</td>"
+                        Tabella+="<td>"+vett[i].disponibile+"</td>"
+                        Tabella+="</tr>";
+                    }
+                }
+                Tabella+="</tbody>";
+                Tabella+="</table>";
+                ls.innerHTML=Tabella;
+            }
+
+            async function CaricaRAM(){
+                const promise=await fetch("computer.json");
+                const vett=await promise.json();
+                let ls=document.querySelector("#Lista");
+                let ram=document.querySelector("#RAM").value;
+
+                let Tabella="<table class=\"table table-striped\">";
+                Tabella+="<tbody>";
+                for(let i=0; i<vett.length; i++){
+                    if(vett[i].ram==ram){
+                        Tabella+="<tr>";
+                        Tabella+="<td>"+vett[i].marca+"</td>"
+                        Tabella+="<td>"+vett[i].modello+"</td>"
+                        Tabella+="<td>"+vett[i].processore+"</td>"
+                        Tabella+="<td>"+vett[i].ram+" GB</td>"
+                        Tabella+="<td>"+vett[i].memoria+" GB</td>"
+                        Tabella+="<td>"+vett[i].anno+"</td>"
+                        Tabella+="<td>"+vett[i].prezzo+" $</td>"
+                        Tabella+="<td>"+vett[i].disponibile+"</td>"
+                        Tabella+="</tr>";
+                    }
+                }
+                Tabella+="</tbody>";
+                Tabella+="</table>";
+                ls.innerHTML=Tabella;
+            }
+
+            async function CaricaPrezzo(){
+                const promise=await fetch("computer.json");
+                const vett=await promise.json();
+                let ls=document.querySelector("#Lista");
+                let prezzo_min=document.querySelector("#PrezzoMin").value;
+                let prezzo_max=document.querySelector("#PrezzoMax").value;
+
+                let Tabella="<table class=\"table table-striped\">";
+                Tabella+="<tbody>";
+                for(let i=0; i<vett.length; i++){
+                    if(vett[i].prezzo>=prezzo_min && vett[i].prezzo<=prezzo_max){
+                        Tabella+="<tr>";
+                        Tabella+="<td>"+vett[i].marca+"</td>"
+                        Tabella+="<td>"+vett[i].modello+"</td>"
+                        Tabella+="<td>"+vett[i].processore+"</td>"
+                        Tabella+="<td>"+vett[i].ram+" GB</td>"
+                        Tabella+="<td>"+vett[i].memoria+" GB</td>"
+                        Tabella+="<td>"+vett[i].anno+"</td>"
+                        Tabella+="<td>"+vett[i].prezzo+" $</td>"
+                        Tabella+="<td>"+vett[i].disponibile+"</td>"
+                        Tabella+="</tr>";
+                    }
+                }
+                Tabella+="</tbody>";
+                Tabella+="</table>";
+                ls.innerHTML=Tabella;
+            }
+
+            async function CaricaAnno(){
+                const promise=await fetch("computer.json");
+                const vett=await promise.json();
+                let ls=document.querySelector("#Lista");
+                let anno_x=document.querySelector("#AnnoX").value;
+                let anno_y=document.querySelector("#AnnoY").value;
+
+                let Tabella="<table class=\"table table-striped\">";
+                Tabella+="<tbody>";
+                for(let i=0; i<vett.length; i++){
+                    if(vett[i].anno>=anno_x && vett[i].anno<=anno_y){
+                        Tabella+="<tr>";
+                        Tabella+="<td>"+vett[i].marca+"</td>"
+                        Tabella+="<td>"+vett[i].modello+"</td>"
+                        Tabella+="<td>"+vett[i].processore+"</td>"
+                        Tabella+="<td>"+vett[i].ram+" GB</td>"
+                        Tabella+="<td>"+vett[i].memoria+" GB</td>"
+                        Tabella+="<td>"+vett[i].anno+"</td>"
+                        Tabella+="<td>"+vett[i].prezzo+" $</td>"
+                        Tabella+="<td>"+vett[i].disponibile+"</td>"
+                        Tabella+="</tr>";
+                    }
+                }
+                Tabella+="</tbody>";
+                Tabella+="</table>";
+                ls.innerHTML=Tabella;
+            }
+
+            async function CaricaDisp(){
+                const promise=await fetch("computer.json");
+                const vett=await promise.json();
+                let ls=document.querySelector("#Lista");     
+
+                let Tabella="<table class=\"table table-striped\">";
+                Tabella+="<tbody>";
+                for(let i=0; i<vett.length; i++){
+                    if(vett[i].disponibile==true){
+                        Tabella+="<tr>";
+                        Tabella+="<td>"+vett[i].marca+"</td>"
+                        Tabella+="<td>"+vett[i].modello+"</td>"
+                        Tabella+="<td>"+vett[i].processore+"</td>"
+                        Tabella+="<td>"+vett[i].ram+" GB</td>"
+                        Tabella+="<td>"+vett[i].memoria+" GB</td>"
+                        Tabella+="<td>"+vett[i].anno+"</td>"
+                        Tabella+="<td>"+vett[i].prezzo+" $</td>"
+                        Tabella+="<td>"+vett[i].disponibile+"</td>"
+                        Tabella+="</tr>";
+                    }
+                }
+                Tabella+="</tbody>";
+                Tabella+="</table>";
+                ls.innerHTML=Tabella;
+            }
+
+            let btnLista=document.querySelector("#CaricaLista");
+            btnLista.addEventListener('click', CaricaLista);
+            let btnMarca=document.querySelector("#CaricaMarca");
+            btnMarca.addEventListener('click', CaricaMarca);
+            let btnRAM=document.querySelector("#CaricaRAM");
+            btnRAM.addEventListener('click', CaricaRAM);
+            let btnPrezzo=document.querySelector("#CaricaPrezzo");
+            btnPrezzo.addEventListener('click', CaricaPrezzo);
+            let btnAnno=document.querySelector("#CaricaAnno");
+            btnAnno.addEventListener('click', CaricaAnno);
+            let btnDisp=document.querySelector("#CaricaDisp");
+            btnDisp.addEventListener('click', CaricaDisp);
+
+        </script>
+    </body>
+</html>
