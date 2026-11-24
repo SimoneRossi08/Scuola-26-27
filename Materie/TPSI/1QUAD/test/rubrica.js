@@ -1,0 +1,65 @@
+async function leggiRubrica(){
+    //alert("Leggo....");
+    /* Viene eseguita una richiesta http al server per la risorsa rubrica.json,
+    il contenuto viene restituito al browser sottoforma di promessa (un insieme di dati ancora inutilizzabile)
+    */
+    const promise = await fetch("rubrica.json");
+    /*  Per utilizzare i dati ricevuto devo farne il "parsing"/traduzione in formato JSON.
+        se il parsing ha esito positivo viene creato il vettore di JSON vettRubrica.
+    */
+    const vettRubrica = await promise.json();
+
+    // imposto vb come riferimento alla viewBox dichiara nel body come div.
+    let vb = document.querySelector("#viewBox");
+
+    vb.innerHTML = "Numero di JSON ricevuti: "+vettRubrica.length+"<br /><br />";
+
+    /*  Per scorrere un vettore utilizzo un ciclo for, ogni cella del vettore è un JSON
+        quindi per ogni cella ho a disposizione le chiavi/attributi del json definiti nel
+        file rubrica.json
+    */
+    for(let i=0; i < vettRubrica.length; i++){
+        vb.innerHTML += vettRubrica[i].nome + " " + vettRubrica[i].cognome + " " + vettRubrica[i].sesso + " " + vettRubrica[i].anni + " " + vettRubrica[i].paese + "<br />";
+    }
+}
+
+async function caricaListaMaschi(){
+    const promise = await fetch("rubrica.json");
+    const vettMaschi = await promise.json();
+    let vb = document.querySelector("#viewBox");
+
+    vb.innerHTML = "Numero Utenti Totali: "+vettMaschi.length+"<br /><br />";
+    for(let i=0; i < vettMaschi.length; i++){
+        if(vettMaschi[i].sesso == "m"){
+            vb.innerHTML += vettMaschi[i].nome + " " + vettMaschi[i].cognome + " " + vettMaschi[i].sesso + " " + vettMaschi[i].anni + " " + vettMaschi[i].paese + "<br />";
+        }
+    }
+}
+
+// funzione da realizzare che visualizza utenti con età maggiore o uguale a quella inserita.
+/*
+    let anni = document.querySelector("#anniRichiesti").value -> avete accesso alla stringa presente nel campo di testo
+    parseInt(anni) -> restituisci il valore intero della stringa presente nel campo di testo.
+*/
+async function anniRichiesti(){
+    const promise = await fetch("rubrica.json");
+    const vettMaschi = await promise.json();
+    let vb = document.querySelector("#viewBox");
+    let anni = document.querySelector("#anniRichiesti").value=parseInt(anni);
+
+    for(let i=0; i < vettMaschi.length; i++){
+        if(vettMaschi[i].anno == anni){
+            vb.innerHTML += vettMaschi[i].nome + " " + vettMaschi[i].cognome + " " + vettMaschi[i].sesso + " " + vettMaschi[i].anni + " " + vettMaschi[i].paese + "<br />";
+        }
+    }
+}
+
+/*  ad ogni caricamento della pagina viene eseguita la funzione leggiRubrica. */
+// leggiRubrica();
+let btnCaricaTutto = document.querySelector("#btnCaricaJSON");
+btnCaricaTutto.addEventListener('click', leggiRubrica);
+
+let btnCaricaMaschi = document.querySelector("#btnCaricaMaschi");
+btnCaricaMaschi.addEventListener('click', caricaListaMaschi);
+
+// btnCaricaTutto.onclick = leggiRubrica;
