@@ -36,6 +36,8 @@ Applicare il framework Bootstrap dall'inizio o, eventualmente, sviluppare una ve
             &nbsp;<div class="d-flex flex-nowrap overflow-auto"><button id="CaricaLista" class="btn btn-info text-nowrap">Visualizza Archivio</button></div><br>
             <div class="d-flex" style="gap: 20px;">
                 <div style="width: 600px;">
+                    <div class="d-flex flex-nowrap overflow-auto"><button id="CaricaDisp" class="btn btn-info text-nowrap">Visualizza per Disponibiltà</button></div><br>
+
                     &nbsp;<input id="Marca" type="text" placeholder="Corsaro, NAPOLI..." class="form-control mb-2">&nbsp;
                     <div class="d-flex flex-nowrap overflow-auto"><button id="CaricaMarca" class="btn btn-info text-nowrap">Visualizza per Marca</button></div><br>
                     
@@ -191,6 +193,32 @@ Applicare il framework Bootstrap dall'inizio o, eventualmente, sviluppare una ve
                 ls.innerHTML=Tabella;
             }
 
+            async function CaricaDisp(){
+                const promise=await fetch("computer.json");
+                const vett=await promise.json();
+                let ls=document.querySelector("#Lista");     
+
+                let Tabella="<table class=\"table table-striped\">";
+                Tabella+="<tbody>";
+                for(let i=0; i<vett.length; i++){
+                    if(vett[i].disponibile==true){
+                        Tabella+="<tr>";
+                        Tabella+="<td>"+vett[i].marca+"</td>"
+                        Tabella+="<td>"+vett[i].modello+"</td>"
+                        Tabella+="<td>"+vett[i].processore+"</td>"
+                        Tabella+="<td>"+vett[i].ram+" GB</td>"
+                        Tabella+="<td>"+vett[i].memoria+" GB</td>"
+                        Tabella+="<td>"+vett[i].anno+"</td>"
+                        Tabella+="<td>"+vett[i].prezzo+" $</td>"
+                        Tabella+="<td>"+vett[i].disponibile+"</td>"
+                        Tabella+="</tr>";
+                    }
+                }
+                Tabella+="</tbody>";
+                Tabella+="</table>";
+                ls.innerHTML=Tabella;
+            }
+
             let btnLista=document.querySelector("#CaricaLista");
             btnLista.addEventListener('click', CaricaLista);
             let btnMarca=document.querySelector("#CaricaMarca");
@@ -201,6 +229,9 @@ Applicare il framework Bootstrap dall'inizio o, eventualmente, sviluppare una ve
             btnPrezzo.addEventListener('click', CaricaPrezzo);
             let btnAnno=document.querySelector("#CaricaAnno");
             btnAnno.addEventListener('click', CaricaAnno);
+            let btnDisp=document.querySelector("#CaricaDisp");
+            btnDisp.addEventListener('click', CaricaDisp);
+
         </script>
     </body>
 </html>
