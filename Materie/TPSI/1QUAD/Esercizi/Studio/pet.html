@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<!--
+Esercitazione proposta
+
+Crea un file di archivio JSON per catalogare ipotetici animali ospitati da un rifugio. Ogni animale è archiviato secondo le seguenti chiavi:
+- Nome
+- Specie
+- Razza
+- Età (anni)
+- Sesso
+- Provincia
+- Adottabile (booleano)
+- Data di Arrivo
+
+Una volta creato un archivio con una decina di animali, con dati diversi ed inventati, procedere alla creazione di una pagina HTML che grazie a funzioni Javascript permetta le seguenti operazioni:
+- Visualizzazione dell'intero archivio.
+- Visualizzazione degli animali attualmente adottabili.
+- Ricerca e visualizzazione degli animali secondo la specie.
+- Ricerca e visualizzazione degli animali secondo la provincia.
+- Ricerca e visualizzazione degli animali di una determinata razza.
+- Ricerca e visualizzazione degli animali con età inferiore o uguale a un valore indicato.
+- Ricerca e visualizzazione degli animali arrivati al rifugio dopo una determinata data.
+
+Predisporre un'interfaccia grafica con bottoni e caselle di testo, indicando quali valori richiedono e a cosa servono.
+
+Applicare il framework Bootstrap dall'inizio o, eventualmente, sviluppare una versione funzionante base e applicarlo in un secondo momento su una copia/duplicato della versione di base.
+-->
+<html>
+    <head>
+        <title>Adozione Animali</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    </head>
+    <body style="background-color: black;">
+        <h1 class="text-center" style="color:white">Centro Adozione Animali</h1><br>
+        <div>
+            <div class="row">
+                <div class="col mb-4"><button id="MostraArchivio" class="btn btn-primary">Mostra Archivio</button></div>
+                <div class="col mb-4"><button id="CaricaAdo" class="btn btn-primary">Mostra Adottabili</button></div>
+            </div>
+
+            <div class="row">
+                <div class="col mb-4"><input id="Specie" type="text" placeholder="Cane, Gatto..." class="form-control"></div>
+                <div class="col mb-4"><button id="CaricaSpecie" class="btn btn-primary">Mostra per Specie</button></div>
+            </div>
+
+            <div class="row">
+                <div class="col mb-4"><input id="Provincia" type="text" placeholder="Mantova, Brescia..." class="form-control"></div>
+                <div class="col mb-4"><button id="CaricaProv" class="btn btn-primary">Mostra per Provincia</button></div>
+            </div>
+
+            <div class="row">
+                <div class="col mb-4"><input id="Razza" type="text" placeholder="Labrador, Corgi..." class="form-control"></div>
+                <div class="col mb-4"><button id="CaricaRazza" class="btn btn-primary">Mostra per Razza</button></div>
+            </div>
+
+            <div class="row">
+                <div class="col mb-4"><input id="EtàX" type="text" placeholder="2, 6..." class="form-control"></div>
+                <div class="col mb-4"><input id="EtàY" type="text" placeholder="7, 11..." class="form-control"></div>
+                <div class="col mb-4"><button id="CaricaEtà" class="btn btn-primary">Mostra per Età</button></div>
+            </div>
+
+            <div class="row">
+                <div class="col mb-4"><input id="Arrivo" type="date" class="form-control"></div>
+                <div class="col mb-4"><button id="CaricaArrivo" class="btn btn-primary">Mostra per Arrivo</button></div>
+            </div>
+        </div>
+        <div id="Lista"></div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+        <script>
+            async function CaricaArchivio(){
+                const risposta=await fetch("pet.json");
+                const vett=await risposta.json();
+                let ls=document.querySelector("#Lista");
+                let tbl=`<table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Specie</th>
+                                    <th scope="col">Razza</th>
+                                    <th scope="col">Età</th>
+                                    <th scope="col">Sesso</th>
+                                    <th scope="col">Provincia</th>
+                                    <th scope="col">Adottabile</th>
+                                    <th scope="col">Data Arrivo</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                                
+                for(let i=0; i<vett.length; i++){
+                    tbl+="<tr>";
+                    tbl+="<td>"+(i+1)+"</td>";
+                    tbl+="<td>"+vett[i].nome+"</td>";
+                    tbl+="<td>"+vett[i].specie+"</td>";
+                    tbl+="<td>"+vett[i].razza+"</td>";
+                    tbl+="<td>"+vett[i].eta+"</td>";
+                    tbl+="<td>"+vett[i].sesso+"</td>";
+                    tbl+="<td>"+vett[i].provincia+"</td>";
+                    tbl+="<td>"+vett[i].adottabile+"</td>";
+                    tbl+="<td>"+vett[i].data_arrivo+"</td>";
+                    tbl+="</tr>";
+                }
+                tbl+="</tbody></table>";
+                ls.innerHTML=tbl;
+            }
+
+            async function CaricaAdott(){
+                const risposta=await fetch("pet.json");
+                const vett=await risposta.json();
+                let ls=document.querySelector("#Lista");
+                let tbl=`<table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Specie</th>
+                                    <th scope="col">Razza</th>
+                                    <th scope="col">Età</th>
+                                    <th scope="col">Sesso</th>
+                                    <th scope="col">Provincia</th>
+                                    <th scope="col">Adottabile</th>
+                                    <th scope="col">Data Arrivo</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                                
+                for(let i=0; i<vett.length; i++){
+                    if(vett[i].adottabile==true){
+                        tbl+="<tr>";
+                        tbl+="<td>"+(i+1)+"</td>";
+                        tbl+="<td>"+vett[i].nome+"</td>";
+                        tbl+="<td>"+vett[i].specie+"</td>";
+                        tbl+="<td>"+vett[i].razza+"</td>";
+                        tbl+="<td>"+vett[i].eta+"</td>";
+                        tbl+="<td>"+vett[i].sesso+"</td>";
+                        tbl+="<td>"+vett[i].provincia+"</td>";
+                        tbl+="<td>"+vett[i].adottabile+"</td>";
+                        tbl+="<td>"+vett[i].data_arrivo+"</td>";
+                        tbl+="</tr>";
+                    }
+                }
+                tbl+="</tbody></table>";
+                ls.innerHTML=tbl;
+            }
+            
+            async function CaricaSpecie(){
+                const risposta=await fetch("pet.json");
+                const vett=await risposta.json();
+                let ls=document.querySelector("#Lista");
+                let spc=document.querySelector("#Specie").value;
+                let tbl=`<table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Specie</th>
+                                    <th scope="col">Razza</th>
+                                    <th scope="col">Età</th>
+                                    <th scope="col">Sesso</th>
+                                    <th scope="col">Provincia</th>
+                                    <th scope="col">Adottabile</th>
+                                    <th scope="col">Data Arrivo</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                                
+                for(let i=0; i<vett.length; i++){
+                    if(vett[i].specie==spc){
+                        tbl+="<tr>";
+                        tbl+="<td>"+(i+1)+"</td>";
+                        tbl+="<td>"+vett[i].nome+"</td>";
+                        tbl+="<td>"+vett[i].specie+"</td>";
+                        tbl+="<td>"+vett[i].razza+"</td>";
+                        tbl+="<td>"+vett[i].eta+"</td>";
+                        tbl+="<td>"+vett[i].sesso+"</td>";
+                        tbl+="<td>"+vett[i].provincia+"</td>";
+                        tbl+="<td>"+vett[i].adottabile+"</td>";
+                        tbl+="<td>"+vett[i].data_arrivo+"</td>";
+                        tbl+="</tr>";
+                    }
+                }
+                tbl+="</tbody></table>";
+                ls.innerHTML=tbl;
+            }
+
+            async function CaricaProv(){
+                const risposta=await fetch("pet.json");
+                const vett=await risposta.json();
+                let ls=document.querySelector("#Lista");
+                let prov=document.querySelector("#Provincia").value;
+                let tbl=`<table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Specie</th>
+                                    <th scope="col">Razza</th>
+                                    <th scope="col">Età</th>
+                                    <th scope="col">Sesso</th>
+                                    <th scope="col">Provincia</th>
+                                    <th scope="col">Adottabile</th>
+                                    <th scope="col">Data Arrivo</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                                
+                for(let i=0; i<vett.length; i++){
+                    if(vett[i].provincia==prov){
+                        tbl+="<tr>";
+                        tbl+="<td>"+(i+1)+"</td>";
+                        tbl+="<td>"+vett[i].nome+"</td>";
+                        tbl+="<td>"+vett[i].specie+"</td>";
+                        tbl+="<td>"+vett[i].razza+"</td>";
+                        tbl+="<td>"+vett[i].eta+"</td>";
+                        tbl+="<td>"+vett[i].sesso+"</td>";
+                        tbl+="<td>"+vett[i].provincia+"</td>";
+                        tbl+="<td>"+vett[i].adottabile+"</td>";
+                        tbl+="<td>"+vett[i].data_arrivo+"</td>";
+                        tbl+="</tr>";
+                    }
+                }
+                tbl+="</tbody></table>";
+                ls.innerHTML=tbl;
+            }
+
+            async function CaricaRazza(){
+                const risposta=await fetch("pet.json");
+                const vett=await risposta.json();
+                let ls=document.querySelector("#Lista");
+                let razza=document.querySelector("#Razza").value;
+                let tbl=`<table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Specie</th>
+                                    <th scope="col">Razza</th>
+                                    <th scope="col">Età</th>
+                                    <th scope="col">Sesso</th>
+                                    <th scope="col">Provincia</th>
+                                    <th scope="col">Adottabile</th>
+                                    <th scope="col">Data Arrivo</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                                
+                for(let i=0; i<vett.length; i++){
+                    if(vett[i].razza==razza){
+                        tbl+="<tr>";
+                        tbl+="<td>"+(i+1)+"</td>";
+                        tbl+="<td>"+vett[i].nome+"</td>";
+                        tbl+="<td>"+vett[i].specie+"</td>";
+                        tbl+="<td>"+vett[i].razza+"</td>";
+                        tbl+="<td>"+vett[i].eta+"</td>";
+                        tbl+="<td>"+vett[i].sesso+"</td>";
+                        tbl+="<td>"+vett[i].provincia+"</td>";
+                        tbl+="<td>"+vett[i].adottabile+"</td>";
+                        tbl+="<td>"+vett[i].data_arrivo+"</td>";
+                        tbl+="</tr>";
+                    }
+                }
+                tbl+="</tbody></table>";
+                ls.innerHTML=tbl;
+            }
+
+            async function CaricaEtà(){
+                const risposta=await fetch("pet.json");
+                const vett=await risposta.json();
+                let ls=document.querySelector("#Lista");
+                let età_x=document.querySelector("#EtàX").value;
+                let età_y=document.querySelector("#EtàY").value;
+                let tbl=`<table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Specie</th>
+                                    <th scope="col">Razza</th>
+                                    <th scope="col">Età</th>
+                                    <th scope="col">Sesso</th>
+                                    <th scope="col">Provincia</th>
+                                    <th scope="col">Adottabile</th>
+                                    <th scope="col">Data Arrivo</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                                
+                for(let i=0; i<vett.length; i++){
+                    if(vett[i].eta<=età_y && vett[i].eta>=età_x){
+                        tbl+="<tr>";
+                        tbl+="<td>"+(i+1)+"</td>";
+                        tbl+="<td>"+vett[i].nome+"</td>";
+                        tbl+="<td>"+vett[i].specie+"</td>";
+                        tbl+="<td>"+vett[i].razza+"</td>";
+                        tbl+="<td>"+vett[i].eta+"</td>";
+                        tbl+="<td>"+vett[i].sesso+"</td>";
+                        tbl+="<td>"+vett[i].provincia+"</td>";
+                        tbl+="<td>"+vett[i].adottabile+"</td>";
+                        tbl+="<td>"+vett[i].data_arrivo+"</td>";
+                        tbl+="</tr>";
+                    }
+                }
+                tbl+="</tbody></table>";
+                ls.innerHTML=tbl;
+            }
+
+            async function CaricaArrivo(){
+                const risposta=await fetch("pet.json");
+                const vett=await risposta.json();
+                let ls=document.querySelector("#Lista");
+                let arrivo=document.querySelector("#Arrivo").value;
+                let tbl=`<table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Specie</th>
+                                    <th scope="col">Razza</th>
+                                    <th scope="col">Età</th>
+                                    <th scope="col">Sesso</th>
+                                    <th scope="col">Provincia</th>
+                                    <th scope="col">Adottabile</th>
+                                    <th scope="col">Data Arrivo</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                                
+                for(let i=0; i<vett.length; i++){
+                    if(vett[i].data_arrivo==arrivo){
+                        tbl+="<tr>";
+                        tbl+="<td>"+(i+1)+"</td>";
+                        tbl+="<td>"+vett[i].nome+"</td>";
+                        tbl+="<td>"+vett[i].specie+"</td>";
+                        tbl+="<td>"+vett[i].razza+"</td>";
+                        tbl+="<td>"+vett[i].eta+"</td>";
+                        tbl+="<td>"+vett[i].sesso+"</td>";
+                        tbl+="<td>"+vett[i].provincia+"</td>";
+                        tbl+="<td>"+vett[i].adottabile+"</td>";
+                        tbl+="<td>"+vett[i].data_arrivo+"</td>";
+                        tbl+="</tr>";
+                    }
+                }
+                tbl+="</tbody></table>";
+                ls.innerHTML=tbl;
+            }
+
+            let btnArchivio=document.querySelector("#MostraArchivio");
+            btnArchivio.addEventListener('click', CaricaArchivio);
+            let btnAdott=document.querySelector("#CaricaAdo");
+            btnAdott.addEventListener('click', CaricaAdott);
+            let btnSpecie=document.querySelector("#CaricaSpecie");
+            btnSpecie.addEventListener('click', CaricaSpecie);
+            let btnProv=document.querySelector("#CaricaProv");
+            btnProv.addEventListener('click', CaricaProv);
+            let btnRazza=document.querySelector("#CaricaRazza");
+            btnRazza.addEventListener('click', CaricaRazza);
+            let btnEtà=document.querySelector("#CaricaEtà");
+            btnEtà.addEventListener('click', CaricaEtà);
+            let btnArrivo=document.querySelector("#CaricaArrivo");
+            btnArrivo.addEventListener('click', CaricaArrivo);
+        </script>
+    </body>
+</html>

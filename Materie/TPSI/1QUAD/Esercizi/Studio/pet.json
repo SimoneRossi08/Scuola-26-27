@@ -1,0 +1,102 @@
+[
+    {
+        "nome": "Luna",
+        "specie": "Cane",
+        "razza": "Labrador",
+        "eta": 3,
+        "sesso": "Femmina",
+        "provincia": "Mantova",
+        "adottabile": true,
+        "data_arrivo": "2026-09-14"
+    },
+    {
+        "nome": "Milo",
+        "specie": "Gatto",
+        "razza": "Europeo",
+        "eta": 2,
+        "sesso": "Maschio",
+        "provincia": "Brescia",
+        "adottabile": true,
+        "data_arrivo": "2026-10-03"
+    },
+    {
+        "nome": "Rocky",
+        "specie": "Cane",
+        "razza": "Pastore Tedesco",
+        "eta": 5,
+        "sesso": "Maschio",
+        "provincia": "Verona",
+        "adottabile": false,
+        "data_arrivo": "2026-07-22"
+    },
+    {
+        "nome": "Nina",
+        "specie": "Coniglio",
+        "razza": "Ariete Nano",
+        "eta": 1,
+        "sesso": "Femmina",
+        "provincia": "Cremona",
+        "adottabile": true,
+        "data_arrivo": "2026-11-05"
+    },
+    {
+        "nome": "Thor",
+        "specie": "Cane",
+        "razza": "Bulldog Francese",
+        "eta": 4,
+        "sesso": "Maschio",
+        "provincia": "Milano",
+        "adottabile": true,
+        "data_arrivo": "2026-08-19"
+    },
+    {
+        "nome": "Whiskers",
+        "specie": "Gatto",
+        "razza": "Siamese",
+        "eta": 6,
+        "sesso": "Maschio",
+        "provincia": "Bergamo",
+        "adottabile": false,
+        "data_arrivo": "2026-06-11"
+    },
+    {
+        "nome": "Coco",
+        "specie": "Pappagallo",
+        "razza": "Cenerino",
+        "eta": 2,
+        "sesso": "Femmina",
+        "provincia": "Pavia",
+        "adottabile": true,
+        "data_arrivo": "2026-10-27"
+    },
+    {
+        "nome": "Bunny",
+        "specie": "Coniglio",
+        "razza": "Testa di Leone",
+        "eta": 3,
+        "sesso": "Maschio",
+        "provincia": "Lodi",
+        "adottabile": false,
+        "data_arrivo": "2026-05-30"
+    },
+    {
+        "nome": "Stella",
+        "specie": "Cane",
+        "razza": "Golden Retriever",
+        "eta": 7,
+        "sesso": "Femmina",
+        "provincia": "Monza e Brianza",
+        "adottabile": true,
+        "data_arrivo": "2026-09-02"
+    },
+    {
+        "nome": "Oliver",
+        "specie": "Gatto",
+        "razza": "Maine Coon",
+        "eta": 1,
+        "sesso": "Maschio",
+        "provincia": "Como",
+        "adottabile": true,
+        "data_arrivo": "2026-11-12"
+    }
+]
