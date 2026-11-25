@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Template Catalogo JSON</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    </head>
+    <body>
+        <div id="Pulsanti"> //sezione input e bottoni
+            <div class="row"> //class="row" => riga per mettere i due bottoni affiancati sopra agli altri
+                <div class="col mb-4"><button id="btn1" class="btn btn-primary">Bottone 1</button></div>
+                <div class="col mb-4"><button id="btn2" class="btn btn-primary">Bottone 2</button></div>
+            </div>
+
+            <div class="row">
+                <div class="col mb-4"><input id="input3" type="text" placeholder="Template" class="form-control"></div> //input per il template con singolo campo
+                <div class="col mb-4"><button id="btn3" class="btn btn-primary">Bottone 3</button></div>
+            </div>
+
+            <div class="row">
+                <div class="col mb-4"><input id="input4_x" type="text" placeholder="Template" class="form-control"></div> //input per il template con due campi
+                <div class="col mb-4"><input id="input4_y" type="text" placeholder="Template" class="form-control"></div> //input per il template con due campi
+                <div class="col mb-4"><button id="btn4" class="btn btn-primary">Bottone 4</button></div>
+            </div>
+        </div>
+        <div id="ViewBox"></div> //sezione per visualizzare il file JSON
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+        <script>
+            async function MostraFileJSON(){ //stampa l'intero file JSON nella sezione ViewBox
+                const promise=await fetch("template.json"); //richiesta del file JSON
+                const vettore=await promise.json(); //la variabile vettore contiene il file JSON
+                let vb=document.querySelector("#ViewBox"); //collegamento della variabile vb con la sezione ViewBox
+                let table=`<table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Variabile 1</th>
+                                    <th scope="col">Variabile 2</th>
+                                    <th scope="col">Variabile 3</th>
+                                    <th scope="col">Variabile 4</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                //creazione dell'intestazione della tabella
+
+                for(let i=0; i<vettore.length; i++){
+                    table+="<tr>";
+                    table+="<td>"+vettore[i].variabile1+"</td>";
+                    table+="<td>"+vettore[i].variabile2+"</td>";
+                    table+="<td>"+vettore[i].variabile3+"</td>";
+                    table+="<td>"+vettore[i].variabile4+"</td>"; 
+                }
+                //creazione del corpo della tabella con i dati del file JSON
+                table+="</tbody></table>"; //chiusura della tabella
+                vb.innerHTML=table; //visualizzazione della tabella nella sezione ViewBox
+            }
+
+            async function MostraCampoSingolo(){ //stampa il file JSON filtrato in base al valore inserito dall'utente nell'input1
+                const promise=await fetch("template.json"); 
+                const vettore=await promise.json(); 
+                let vr3=document.querySelector("#input3").value; //assegnazione del valore inserito dall'utente nell'input3 alla variabile vr3
+                let vb=document.querySelector("#ViewBox"); 
+                let table=`<table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Variabile 1</th>
+                                    <th scope="col">Variabile 2</th>
+                                    <th scope="col">Variabile 3</th>
+                                    <th scope="col">Variabile 4</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+
+                for(let i=0; i<vettore.length; i++){
+                    if(vettore[i].variabile3==vr3){ //controllo se vr3 coincide con la variabile3 del file JSON
+                        table+="<tr>";
+                        table+="<td>"+vettore[i].variabile1+"</td>";
+                        table+="<td>"+vettore[i].variabile2+"</td>";
+                        table+="<td>"+vettore[i].variabile3+"</td>";
+                        table+="<td>"+vettore[i].variabile4+"</td>"; 
+                    }
+                }
+                table+="</tbody></table>"; 
+                vb.innerHTML=table; 
+            }
+
+            async function MostraCampoMultiplo(){ //stampa il file JSON filtrato in base ai valori inseriti dall'utente nell'input4_x e nell'input4_y (ATTENZIONE: QUESTA FUNZIONE TEMPLATE VALE SOLO PER NUMERI)
+                const promise=await fetch("template.json"); 
+                const vettore=await promise.json(); 
+                let vr_x=document.querySelector("#input4_x").value; //assegnazione del valore inserito dall'utente nell'input4_x alla variabile vr_x
+                let vr_y=document.querySelector("#input4_y").value; //assegnazione del valore inserito dall'utente nell'input4_y alla variabile vr_y
+                let vb=document.querySelector("#ViewBox"); 
+                let table=`<table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Variabile 1</th>
+                                    <th scope="col">Variabile 2</th>
+                                    <th scope="col">Variabile 3</th>
+                                    <th scope="col">Variabile 4</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+
+                for(let i=0; i<vettore.length; i++){
+                    if(vettore[i].variabile4<=vr_x && vettore[i].variabile4>=vr_y){ //controllo i valori della variabile4 tra i valori di vr_x e vr_y
+                        table+="<tr>";
+                        table+="<td>"+vettore[i].variabile1+"</td>";
+                        table+="<td>"+vettore[i].variabile2+"</td>";
+                        table+="<td>"+vettore[i].variabile3+"</td>";
+                        table+="<td>"+vettore[i].variabile4+"</td>"; 
+                    }
+                }
+                table+="</tbody></table>"; 
+                vb.innerHTML=table; 
+            }
+
+            let btn1=document.querySelector("#btn1"); //collegamento del bottone1 con la variabile btn1
+            btn1.addEventListener("click", MostraFileJSON); //al click del bottone1 viene eseguita la funzione MostraFileJSON
+
+            let btn3=document.querySelector("#btn3"); //collegamento del bottone3 con la variabile btn3
+            btn3.addEventListener("click", MostraCampoSingolo); //al click del bottone3 viene eseguita la funzione MostraCampoSingolo
+            
+            let btn4=document.querySelector("#btn4"); //collegamento del bottone4 con la variabile btn4
+            btn4.addEventListener("click", MostraCampoMultiplo); //al click del bottone4 viene eseguita la funzione MostraCampoMultiplo
+        </script>
+    </body>
+</html>
